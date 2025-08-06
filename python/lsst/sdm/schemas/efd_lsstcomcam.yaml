@@ -1,16 +1,42 @@
 ---
 name: efd_lsstcomcam
 "@id": "#efd_lsstcomcam"
-description: Transformed EFD Consolidated Database for LSSTComCam.
+description: Transformed EFD Consolidated Database for lsstcomcam.
 version:
-  current: "1.0.0"
+  current: 1.0.0
 tables:
 - name: exposure_efd
   "@id": "#exposure_efd"
-  description: Transformed EFD topics by exposure
+  description: Transformed EFD topics by exposure.
   primaryKey:
-  - "#exposure_efd.exposure_id"
+  - "#exposure_efd.day_obs"
+  - "#exposure_efd.seq_num"
+  constraints:
+  - name: un_exposure_efd_day_obs_seq_num
+    "@id": "#exposure_efd.un_exposure_efd_day_obs_seq_num"
+    "@type": Unique
+    description: Ensure day_obs plus seq_num is unique.
+    columns:
+    - "#exposure_efd.day_obs"
+    - "#exposure_efd.seq_num"
+  - name: un_exposure_efd_exposure_id
+    "@id": "#exposure_efd.un_exposure_efd_exposure_id"
+    "@type": Unique
+    description: Ensure exposure_id is unique.
+    columns:
+    - "#exposure_efd.exposure_id"
   columns:
+  - name: day_obs
+    "@id": "#exposure_efd.day_obs"
+    description: Day of observation in YYYYMMDD format.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
+  - name: seq_num
+    "@id": "#exposure_efd.seq_num"
+    description: Sequence number for the exposure.
+    datatype: int
+    ivoa:ucd: meta.id.part
   - name: exposure_id
     "@id": "#exposure_efd.exposure_id"
     description: Exposure unique ID.
@@ -27,41 +53,49 @@ tables:
     description: RMS after 4th order polynomial fit of azimuth absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_azimuth_encoder_absolute_position_1_rms_jitter
     "@id": "#exposure_efd.mt_azimuth_encoder_absolute_position_1_rms_jitter"
     description: RMS after 4th order polynomial fit of azimuth absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_azimuth_encoder_absolute_position_2_rms_jitter
     "@id": "#exposure_efd.mt_azimuth_encoder_absolute_position_2_rms_jitter"
     description: RMS after 4th order polynomial fit of azimuth absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_azimuth_encoder_absolute_position_3_rms_jitter
     "@id": "#exposure_efd.mt_azimuth_encoder_absolute_position_3_rms_jitter"
     description: RMS after 4th order polynomial fit of azimuth absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_elevation_encoder_absolute_position_0_rms_jitter
     "@id": "#exposure_efd.mt_elevation_encoder_absolute_position_0_rms_jitter"
     description: RMS after 4th order polynomial fit of elevation absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_elevation_encoder_absolute_position_1_rms_jitter
     "@id": "#exposure_efd.mt_elevation_encoder_absolute_position_1_rms_jitter"
     description: RMS after 4th order polynomial fit of elevation absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_elevation_encoder_absolute_position_2_rms_jitter
     "@id": "#exposure_efd.mt_elevation_encoder_absolute_position_2_rms_jitter"
     description: RMS after 4th order polynomial fit of elevation absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_elevation_encoder_absolute_position_3_rms_jitter
     "@id": "#exposure_efd.mt_elevation_encoder_absolute_position_3_rms_jitter"
     description: RMS after 4th order polynomial fit of elevation absolute position read by each encoder head.
     datatype: float
     ivoa:ucd: stat.rms
+    ivoa:unit: ""
   - name: mt_salindex110_sonic_temperature_mean
     "@id": "#exposure_efd.mt_salindex110_sonic_temperature_mean"
     description: Mean median sonic temperature (air temperature measured sonically). Sonic temperature has poor absolute accuracy (it can be off by several degrees) but good time resolution.
@@ -76,13 +110,13 @@ tables:
     ivoa:unit: deg_C
   - name: mt_salindex110_sonic_temperature_stddev_mean
     "@id": "#exposure_efd.mt_salindex110_sonic_temperature_stddev_mean"
-    description: Standard deviation of the mean standard devation of sonic temperature (air temperature measured sonically) estimated from quartiles.
+    description: Standard deviation of the mean standard deviation of sonic temperature (air temperature measured sonically) estimated from quartiles.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg_C
   - name: mt_salindex110_sonic_temperature_stddev_stddev
     "@id": "#exposure_efd.mt_salindex110_sonic_temperature_stddev_stddev"
-    description: Standard deviation of the standard devation of sonic temperature (air temperature measured sonically) estimated from quartiles.
+    description: Standard deviation of the standard deviation of sonic temperature (air temperature measured sonically) estimated from quartiles.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg_C
@@ -158,74 +192,74 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_mean
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_0_mean"
+  - name: mt_salindex110_wind_speed_stddev_0_mean
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_0_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_stddev
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_0_stddev"
+  - name: mt_salindex110_wind_speed_stddev_0_stddev
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_0_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_min
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_0_min"
+  - name: mt_salindex110_wind_speed_stddev_0_min
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_0_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_max
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_0_max"
+  - name: mt_salindex110_wind_speed_stddev_0_max
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_0_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_mean
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_1_mean"
+  - name: mt_salindex110_wind_speed_stddev_1_mean
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_1_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_stddev
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_1_stddev"
+  - name: mt_salindex110_wind_speed_stddev_1_stddev
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_1_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_min
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_1_min"
+  - name: mt_salindex110_wind_speed_stddev_1_min
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_1_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_max
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_1_max"
+  - name: mt_salindex110_wind_speed_stddev_1_max
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_1_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_mean
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_2_mean"
+  - name: mt_salindex110_wind_speed_stddev_2_mean
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_2_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_stddev
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_2_stddev"
+  - name: mt_salindex110_wind_speed_stddev_2_stddev
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_2_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_min
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_2_min"
+  - name: mt_salindex110_wind_speed_stddev_2_min
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_2_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_max
-    "@id": "#exposure_efd.mt_salindex110_wind_speed_speedstddev_2_max"
+  - name: mt_salindex110_wind_speed_stddev_2_max
+    "@id": "#exposure_efd.mt_salindex110_wind_speed_stddev_2_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
@@ -238,7 +272,7 @@ tables:
     ivoa:unit: m/s
   - name: mt_salindex110_wind_speed_magnitude_stddev
     "@id": "#exposure_efd.mt_salindex110_wind_speed_magnitude_stddev"
-    description: Standard deviation of the edian wind speed magnitude in TMA-GillLabJack01 (salIndex 110).
+    description: Standard deviation of the median wind speed magnitude in TMA-GillLabJack01 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
@@ -302,26 +336,26 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_mean
-    "@id": "#exposure_efd.mt_salindex301_airflow_speedstddev_mean"
+  - name: mt_salindex301_airflow_stddev_mean
+    "@id": "#exposure_efd.mt_salindex301_airflow_stddev_mean"
     description: Mean standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_stddev
-    "@id": "#exposure_efd.mt_salindex301_airflow_speedstddev_stddev"
+  - name: mt_salindex301_airflow_stddev_stddev
+    "@id": "#exposure_efd.mt_salindex301_airflow_stddev_stddev"
     description: Standard deviation of the standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_min
-    "@id": "#exposure_efd.mt_salindex301_airflow_speedstddev_min"
+  - name: mt_salindex301_airflow_stddev_min
+    "@id": "#exposure_efd.mt_salindex301_airflow_stddev_min"
     description: Minimum standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_max
-    "@id": "#exposure_efd.mt_salindex301_airflow_speedstddev_max"
+  - name: mt_salindex301_airflow_stddev_max
+    "@id": "#exposure_efd.mt_salindex301_airflow_stddev_max"
     description: Maximum standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
@@ -2066,20 +2100,20 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg_C
-  - name: mt_salindex111_relativehumidity_mean
-    "@id": "#exposure_efd.mt_salindex111_relativehumidity_mean"
+  - name: mt_salindex111_relative_humidity_mean
+    "@id": "#exposure_efd.mt_salindex111_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: "%"
-  - name: mt_salindex112_relativehumidity_mean
-    "@id": "#exposure_efd.mt_salindex112_relativehumidity_mean"
+  - name: mt_salindex112_relative_humidity_mean
+    "@id": "#exposure_efd.mt_salindex112_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: "%"
-  - name: mt_salindex113_relativehumidity_mean
-    "@id": "#exposure_efd.mt_salindex113_relativehumidity_mean"
+  - name: mt_salindex113_relative_humidity_mean
+    "@id": "#exposure_efd.mt_salindex113_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
@@ -2594,55 +2628,75 @@ tables:
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_stddev
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_y_stddev"
-    description: Standard deviation of the acceleromete's Y-axis angular acceleration.
+    description: Standard deviation of the accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_max
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_y_max"
-    description: Maximum acceleromete's Y-axis angular acceleration.
+    description: Maximum accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_min
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_y_min"
-    description: Minimum acceleromete's Y-axis angular acceleration.
+    description: Minimum accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_mean
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_z_mean"
-    description: Mean acceleromete's Z-axis angular acceleration.
+    description: Mean accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_stddev
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_z_stddev"
-    description: Standard deviation of the acceleromete's Z-axis angular acceleration.
+    description: Standard deviation of the accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_max
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_z_max"
-    description: Maximum acceleromete's Z-axis angular acceleration.
+    description: Maximum accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_min
     "@id": "#exposure_efd.mt_salindex104_m1m3_angular_acceleration_z_min"
-    description: Minimum acceleromete's Z-axis angular acceleration.
+    description: Minimum accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: deg/s**2
+  - name: mt_dome_temperature_mean
+    "@id": "#exposure_efd.mt_dome_temperature_mean"
+    description: Mean dome temperature item 0.
+    datatype: float
+    ivoa:ucd: meta.ucd;stat.mean
+    ivoa:unit: deg_C
 
 - name: exposure_efd_unpivoted
   "@id": "#exposure_efd_unpivoted"
-  description: Unpivoted EFD exposure data
+  description: Unpivoted EFD exposure data.
   primaryKey:
+  - "#exposure_efd_unpivoted.day_obs"
+  - "#exposure_efd_unpivoted.seq_num"
   - "#exposure_efd_unpivoted.exposure_id"
   - "#exposure_efd_unpivoted.property"
   - "#exposure_efd_unpivoted.field"
   columns:
+  - name: day_obs
+    "@id": "#exposure_efd_unpivoted.day_obs"
+    description: Day of observation in YYYYMMDD format.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
+  - name: seq_num
+    "@id": "#exposure_efd_unpivoted.seq_num"
+    description: Sequence number for the exposure.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
   - name: exposure_id
     "@id": "#exposure_efd_unpivoted.exposure_id"
     description: Unique identifier for the exposure.
@@ -2675,10 +2729,36 @@ tables:
 
 - name: visit1_efd
   "@id": "#visit1_efd"
-  description: Transformed EFD topics by visit
+  description: Transformed EFD topics by visit.
   primaryKey:
-  - "#visit1_efd.visit_id"
+  - "#visit1_efd.day_obs"
+  - "#visit1_efd.seq_num"
+  constraints:
+  - name: un_visit1_efd_day_obs_seq_num
+    "@id": "#visit1_efd.un_visit1_efd_day_obs_seq_num"
+    "@type": Unique
+    description: Ensure day_obs plus seq_num is unique.
+    columns:
+    - "#visit1_efd.day_obs"
+    - "#visit1_efd.seq_num"
+  - name: un_visit1_efd_visit_id
+    "@id": "#visit1_efd.un_visit1_efd_visit_id"
+    "@type": Unique
+    description: Ensure visit_id is unique.
+    columns:
+    - "#visit1_efd.visit_id"
   columns:
+  - name: day_obs
+    "@id": "#visit1_efd.day_obs"
+    description: Day of observation in YYYYMMDD format.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
+  - name: seq_num
+    "@id": "#visit1_efd.seq_num"
+    description: Sequence number for the visit.
+    datatype: int
+    ivoa:ucd: meta.id.part
   - name: visit_id
     "@id": "#visit1_efd.visit_id"
     description: Visit unique ID.
@@ -2704,13 +2784,13 @@ tables:
     ivoa:unit: deg_C
   - name: mt_salindex110_sonic_temperature_stddev_mean
     "@id": "#visit1_efd.mt_salindex110_sonic_temperature_stddev_mean"
-    description: Standard deviation of the mean standard devation of sonic temperature (air temperature measured sonically) estimated from quartiles.
+    description: Standard deviation of the mean standard deviation of sonic temperature (air temperature measured sonically) estimated from quartiles.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg_C
   - name: mt_salindex110_sonic_temperature_stddev_stddev
     "@id": "#visit1_efd.mt_salindex110_sonic_temperature_stddev_stddev"
-    description: Standard deviation of the standard devation of sonic temperature (air temperature measured sonically) estimated from quartiles.
+    description: Standard deviation of the standard deviation of sonic temperature (air temperature measured sonically) estimated from quartiles.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg_C
@@ -2786,74 +2866,74 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_mean
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_0_mean"
+  - name: mt_salindex110_wind_speed_stddev_0_mean
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_0_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_stddev
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_0_stddev"
+  - name: mt_salindex110_wind_speed_stddev_0_stddev
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_0_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_min
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_0_min"
+  - name: mt_salindex110_wind_speed_stddev_0_min
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_0_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_0_max
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_0_max"
+  - name: mt_salindex110_wind_speed_stddev_0_max
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_0_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 0 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_mean
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_1_mean"
+  - name: mt_salindex110_wind_speed_stddev_1_mean
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_1_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_stddev
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_1_stddev"
+  - name: mt_salindex110_wind_speed_stddev_1_stddev
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_1_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_min
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_1_min"
+  - name: mt_salindex110_wind_speed_stddev_1_min
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_1_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_1_max
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_1_max"
+  - name: mt_salindex110_wind_speed_stddev_1_max
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_1_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 1 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_mean
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_2_mean"
+  - name: mt_salindex110_wind_speed_stddev_2_mean
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_2_mean"
     description: Mean standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_stddev
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_2_stddev"
+  - name: mt_salindex110_wind_speed_stddev_2_stddev
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_2_stddev"
     description: Standard deviation of the standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_min
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_2_min"
+  - name: mt_salindex110_wind_speed_stddev_2_min
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_2_min"
     description: Minimum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex110_wind_speed_speedstddev_2_max
-    "@id": "#visit1_efd.mt_salindex110_wind_speed_speedstddev_2_max"
+  - name: mt_salindex110_wind_speed_stddev_2_max
+    "@id": "#visit1_efd.mt_salindex110_wind_speed_stddev_2_max"
     description: Maximum standard deviation of wind speed (x, y, z) estimated from quartiles in TMA-GillLabJack01 along axis 2 (salIndex 110).
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
@@ -2866,7 +2946,7 @@ tables:
     ivoa:unit: m/s
   - name: mt_salindex110_wind_speed_magnitude_stddev
     "@id": "#visit1_efd.mt_salindex110_wind_speed_magnitude_stddev"
-    description: Standard deviation of the edian wind speed magnitude in TMA-GillLabJack01 (salIndex 110).
+    description: Standard deviation of the median wind speed magnitude in TMA-GillLabJack01 (salIndex 110).
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
@@ -2930,26 +3010,26 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_mean
-    "@id": "#visit1_efd.mt_salindex301_airflow_speedstddev_mean"
+  - name: mt_salindex301_airflow_stddev_mean
+    "@id": "#visit1_efd.mt_salindex301_airflow_stddev_mean"
     description: Mean standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_stddev
-    "@id": "#visit1_efd.mt_salindex301_airflow_speedstddev_stddev"
+  - name: mt_salindex301_airflow_stddev_stddev
+    "@id": "#visit1_efd.mt_salindex301_airflow_stddev_stddev"
     description: Standard deviation of the standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_min
-    "@id": "#visit1_efd.mt_salindex301_airflow_speedstddev_min"
+  - name: mt_salindex301_airflow_stddev_min
+    "@id": "#visit1_efd.mt_salindex301_airflow_stddev_min"
     description: Minimum standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: m/s
-  - name: mt_salindex301_airflow_speedstddev_max
-    "@id": "#visit1_efd.mt_salindex301_airflow_speedstddev_max"
+  - name: mt_salindex301_airflow_stddev_max
+    "@id": "#visit1_efd.mt_salindex301_airflow_stddev_max"
     description: Maximum standard deviation of wind speed estimated from quartiles (salIndex 301). Not available for all sensor types.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
@@ -4694,20 +4774,20 @@ tables:
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg_C
-  - name: mt_salindex111_relativehumidity_mean
-    "@id": "#visit1_efd.mt_salindex111_relativehumidity_mean"
+  - name: mt_salindex111_relative_humidity_mean
+    "@id": "#visit1_efd.mt_salindex111_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: "%"
-  - name: mt_salindex112_relativehumidity_mean
-    "@id": "#visit1_efd.mt_salindex112_relativehumidity_mean"
+  - name: mt_salindex112_relative_humidity_mean
+    "@id": "#visit1_efd.mt_salindex112_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: "%"
-  - name: mt_salindex113_relativehumidity_mean
-    "@id": "#visit1_efd.mt_salindex113_relativehumidity_mean"
+  - name: mt_salindex113_relative_humidity_mean
+    "@id": "#visit1_efd.mt_salindex113_relative_humidity_mean"
     description: Mean relative humidity.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
@@ -5222,55 +5302,75 @@ tables:
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_stddev
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_y_stddev"
-    description: Standard deviation of the acceleromete's Y-axis angular acceleration.
+    description: Standard deviation of the accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_max
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_y_max"
-    description: Maximum acceleromete's Y-axis angular acceleration.
+    description: Maximum accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_y_min
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_y_min"
-    description: Minimum acceleromete's Y-axis angular acceleration.
+    description: Minimum accelerometer's Y-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_mean
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_z_mean"
-    description: Mean acceleromete's Z-axis angular acceleration.
+    description: Mean accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.mean
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_stddev
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_z_stddev"
-    description: Standard deviation of the acceleromete's Z-axis angular acceleration.
+    description: Standard deviation of the accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: stat.stdev
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_max
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_z_max"
-    description: Maximum acceleromete's Z-axis angular acceleration.
+    description: Maximum accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.max
     ivoa:unit: deg/s**2
   - name: mt_salindex104_m1m3_angular_acceleration_z_min
     "@id": "#visit1_efd.mt_salindex104_m1m3_angular_acceleration_z_min"
-    description: Minimum acceleromete's Z-axis angular acceleration.
+    description: Minimum accelerometer's Z-axis angular acceleration.
     datatype: float
     ivoa:ucd: meta.ucd;stat.min
     ivoa:unit: deg/s**2
+  - name: mt_dome_temperature_mean
+    "@id": "#visit1_efd.mt_dome_temperature_mean"
+    description: Mean dome temperature item 0.
+    datatype: float
+    ivoa:ucd: meta.ucd;stat.mean
+    ivoa:unit: deg_C
 
 - name: visit1_efd_unpivoted
   "@id": "#visit1_efd_unpivoted"
-  description: Unpivoted EFD visit data
+  description: Unpivoted EFD visit data.
   primaryKey:
+  - "#visit1_efd_unpivoted.day_obs"
+  - "#visit1_efd_unpivoted.seq_num"
   - "#visit1_efd_unpivoted.visit_id"
   - "#visit1_efd_unpivoted.property"
   - "#visit1_efd_unpivoted.field"
   columns:
+  - name: day_obs
+    "@id": "#visit1_efd_unpivoted.day_obs"
+    description: Day of observation in YYYYMMDD format.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
+  - name: seq_num
+    "@id": "#visit1_efd_unpivoted.seq_num"
+    description: Sequence number for the visit.
+    datatype: int
+    nullable: false
+    ivoa:ucd: meta.id.part
   - name: visit_id
     "@id": "#visit1_efd_unpivoted.visit_id"
     description: Unique identifier for the visit.
